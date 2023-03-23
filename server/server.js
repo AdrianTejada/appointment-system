@@ -24,9 +24,12 @@ app.get('/', (req, res) => {
     });
 });
 
+app.use('/api/v1/user', require('./routes/userRoutes'));
+
 // port
 const port = process.env.PORT || 8080
 
+// listen port
 app.listen(port, ()=>{
-    console.log(`server running in ${process.env.NODE_MODE} mode on port ${port}`.bgGreen.white)
+    console.log(`Server running in ${process.env.NODE_MODE} mode on port ${port}`.bgBlue.white)
 });
