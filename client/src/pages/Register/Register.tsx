@@ -2,25 +2,10 @@ import React, {useState} from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { TextField, Button} from '@mui/material'
+import { FormCont } from './styles';
+import { Credentials } from './types';
 
-
-const FormCont = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: 10px;
-    border: 1px solid lightgrey;
-    padding: 40px;
-    border-radius: 5px;
-`;
-
-type Credentials = {
-    name: string
-    email: string
-    password: string
-}
-
-export const Register = () => {
+const Register = () => {
     const [credentials, setCredentials] = useState({name:"", email:"", password: ""} as Credentials)
 
     return (
@@ -28,7 +13,7 @@ export const Register = () => {
             onSubmit={()=>console.log(credentials)}
         >
             <h1>
-                Register Form
+                Register
             </h1>
             <TextField
                 variant='filled'
@@ -70,3 +55,5 @@ export const Register = () => {
         </FormCont>
     )
 }
+
+export default Register;
