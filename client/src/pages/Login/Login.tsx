@@ -5,24 +5,18 @@ import { Credentials } from './types';
 import { FormCont } from '../Register/styles';
 
 const Login = () => {
-    const [credentials, setCredentials] = useState({name:"", email:"", password: ""} as Credentials)
+    const [credentials, setCredentials] = useState({ email:"", password: ""} as Credentials)
 
     return (
             <FormCont
-                onSubmit={()=>console.log(credentials)}
+                onSubmit={(ev)=>{
+                    ev.preventDefault
+                    console.log(credentials)
+                }}
             >
             <h1>
                 Login
             </h1>
-            <TextField
-                variant='filled'
-                label='Name'
-                type='text'
-                name='name'
-                required
-                value={credentials.name}
-                onChange={(event)=>setCredentials({...credentials, name: event.target.value})}
-            />
             <TextField 
                 variant='filled'
                 label='Email' 
