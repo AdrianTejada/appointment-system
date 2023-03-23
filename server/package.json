@@ -8,5 +8,17 @@
     "mongoose": "^7.0.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.21"
-  }
+  },
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
