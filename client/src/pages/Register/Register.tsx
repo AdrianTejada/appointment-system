@@ -18,7 +18,7 @@ const Register = () => {
                 console.log(res.data)
                 navigate('/login')
             } else {
-                console.log('error')
+                console.log(res.data)
             }
         } catch (error) {
             console.log(error)

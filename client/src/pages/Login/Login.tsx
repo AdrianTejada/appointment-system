@@ -3,13 +3,23 @@ import { Link } from 'react-router-dom';
 import { TextField, Button} from '@mui/material'
 import { Credentials } from './types';
 import { FormCont } from '../Register/styles';
+import axios from 'axios';
 
 const Login = () => {
     const [credentials, setCredentials] = useState({ email:"", password: ""} as Credentials)
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(credentials)
+        try {
+            const res = await axios.post('http://localhost:8080/api/v1/user/login', credentials)
+            if (res.data.success) {
+                console.log(res.data)
+            } else {
+                console.log(res.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     };
 
 
