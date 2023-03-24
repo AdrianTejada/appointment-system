@@ -7,12 +7,15 @@ import { FormCont } from '../Register/styles';
 const Login = () => {
     const [credentials, setCredentials] = useState({ email:"", password: ""} as Credentials)
 
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log(credentials)
+    };
+
+
     return (
             <FormCont
-                onSubmit={(ev)=>{
-                    ev.preventDefault
-                    console.log(credentials)
-                }}
+                onSubmit={(event)=>handleSubmit(event)}
             >
             <h1>
                 Login
