@@ -1,44 +1,25 @@
 import React, {useState} from 'react';
-import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { TextField, Button} from '@mui/material'
+import { Credentials } from './types';
+import { FormCont } from '../Register/styles';
 
+const Login = () => {
+    const [credentials, setCredentials] = useState({ email:"", password: ""} as Credentials)
 
-const FormCont = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: 10px;
-    border: 1px solid lightgrey;
-    padding: 40px;
-    border-radius: 5px;
-`;
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log(credentials)
+    };
 
-type Credentials = {
-    name: string
-    email: string
-    password: string
-}
-
-export const Register = () => {
-    const [credentials, setCredentials] = useState({name:"", email:"", password: ""} as Credentials)
 
     return (
-        <FormCont
-            onSubmit={()=>console.log(credentials)}
-        >
+            <FormCont
+                onSubmit={(event)=>handleSubmit(event)}
+            >
             <h1>
-                Register Form
+                Login
             </h1>
-            <TextField
-                variant='filled'
-                label='Name'
-                type='text'
-                name='name'
-                required
-                value={credentials.name}
-                onChange={(event)=>setCredentials({...credentials, name: event.target.value})}
-            />
             <TextField 
                 variant='filled'
                 label='Email' 
@@ -66,7 +47,10 @@ export const Register = () => {
             >
                 Register
             </Button>
-            <p>Already a user? Login <Link to='/login'>here.</Link></p>
+            <p>Don't have an account? Register <Link to='/register'>here.</Link></p>
         </FormCont>
+
     )
 }
+
+export default Login;
