@@ -4,18 +4,21 @@ import { TextField, Button} from '@mui/material'
 import { Credentials } from './types';
 import { FormCont } from '../Register/styles';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [credentials, setCredentials] = useState({ email:"", password: ""} as Credentials)
+    const [credentials, setCredentials] = useState({ email:"", password: ""} as Credentials);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
             const res = await axios.post('http://localhost:8080/api/v1/user/login', credentials)
             if (res.data.success) {
-                console.log(res.data)
+                localStorage.setItem('token', JSON.stringify(res.data.token))
+                navigate('/')
             } else {
-                console.log(res.data)
+                console.log(res.data);
             }
         } catch (error) {
             console.log(error)

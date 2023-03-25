@@ -1,8 +1,34 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import axios from 'axios';
 
 const Home = () => {
+    // var token = 'token'
+    // const localStore = localStorage.getItem('token')
+
+    // if (localStore){
+    //     token = localStore
+    // }
+    const getUserData = async () => {
+        try {
+            const res = await axios.post('http://localhost:8080/api/v1/user/getUserData', {} , {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')?.replace(/['"]+/g, "")}`
+                }
+            })
+            console.log(res.data)
+        } catch (error) {
+            
+        }
+    };
+
+    useEffect(()=>{
+        getUserData();
+    })
+
     return (
-        <div>Home</div>
+        <div>
+            {/* <p>{token}</p> */}
+        </div>
     )
 }
 
