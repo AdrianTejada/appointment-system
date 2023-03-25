@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
 
-// login callback
+// login controller
 const loginController = async (req, res) => {
     try {
         const user = await userModel.findOne({email: req.body.email})
@@ -15,7 +15,7 @@ const loginController = async (req, res) => {
             return res.status(200).send({message: 'Invalid Email or password', success: false})
         }
         const token = jwt.sign({id:user._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
-        res.status(200).send({message: 'Login Success', success:true, token, email: user.email, name: user.name})
+        res.status(200).send({message: 'Login Success', success:true, token});
     } catch (error) {
         console.log(error);
         res.status(500).send({succeess: false, message: `Login Controller ${error.message}`})
@@ -42,4 +42,19 @@ const registerController = async (req, res) => {
     }
 };
 
-module.exports = {loginController, registerController};
+// auth controller
+const authController = async (req, res) => {
+    try {
+        const user = await userModel.findOne({_id: req.body.userId})
+        if (!user) {
+            res.status(200).send({success: false, message: 'user not found'})
+        } else {
+            res.status(200).send({succeess: true, email: user.email, name : user.name})
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({succeess: false, message: error.message})
+    }
+}
+
+module.exports = {loginController, registerController, authController};
