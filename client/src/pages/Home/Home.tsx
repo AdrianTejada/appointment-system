@@ -11,7 +11,7 @@ const Home = () => {
             })
             console.log(res.data)
         } catch (error) {
-            
+            console.log(error)
         }
     };
 
@@ -21,7 +21,7 @@ const Home = () => {
 
     return (
         <div>
-            {/* <p>{token}</p> */}
+            home
         </div>
     )
 }
