@@ -5,9 +5,8 @@ import { Credentials } from "./types";
 import { FormCont } from "../Register/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../../redux/features/alertSlice";
-import { RootState } from "../../redux/store";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -16,7 +15,6 @@ const Login = () => {
   } as Credentials);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state: RootState) => state.alerts);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,6 +24,7 @@ const Login = () => {
         "http://localhost:8080/api/v1/user/login",
         credentials
       );
+      window.location.reload();
       if (res.data.success) {
         dispatch(hideLoading());
         localStorage.setItem("token", JSON.stringify(res.data.token));

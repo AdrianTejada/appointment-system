@@ -45,7 +45,7 @@ const Layout = ({children}: LayoutProps) => {
                 bg = {backgroundColor : '#fff', height: '50px'}
               }
               return (
-                  <MenuItem style={bg} onClick={()=>handleClick(item.path)}>
+                  <MenuItem style={bg} onClick={()=>handleClick(item.path)} key={item.name}>
                     <ListItemIcon style={color}>
                       {item.icon}
                     </ListItemIcon>
