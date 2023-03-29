@@ -5,10 +5,15 @@ import Login from './pages/Login'
 import  Register  from './pages/Register'
 import ProtectedRoute from './components/ProtectedRoute'
 import PublicRoute from './components/PublicRoute';
+import { useSelector } from 'react-redux'
+import { RootState } from './redux/store'
 
 function App() {
+  const {loading} = useSelector((state: RootState) => state.alerts)
+
   return (
     <>
+    {loading ? 'Loading...' :
       <BrowserRouter>
         <Routes>
           <Route path='/' element={
@@ -23,7 +28,8 @@ function App() {
           }/>
           <Route path='/register' element={<Register/>}/>
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter>    
+    }
     </>
   )
 }

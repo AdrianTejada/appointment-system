@@ -1,12 +1,10 @@
 import React from 'react'
-import { Cont, Content, Text } from './styles';
-
-import { MenuList, MenuItem, ListItemIcon, Paper } from '@mui/material';
-import {BsFillHouseFill} from 'react-icons/bs'
+import { Cont, Content, Text, Header, ChildrenCont, SideBar } from './styles';
+import { MenuList, MenuItem, ListItemIcon } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
-
-import { MenuData } from '../../data/data';
-import excludeVariablesFromRoot from '@mui/material/styles/excludeVariablesFromRoot';
+import { RootState } from '../../redux/store';
+import { useSelector } from 'react-redux';
+import { userMenu, AdminMenu } from './../../data/data';
 
 type LayoutProps = {
     children: React.ReactNode
@@ -14,39 +12,45 @@ type LayoutProps = {
 
 
 const Layout = ({children}: LayoutProps) => {
-
   const location = useLocation()
-  
+  const {user} = useSelector((state: RootState)=> state.user)
+
+  const menu = user.isAdmin ? AdminMenu : userMenu
+
   return (
     <Cont>
-        <Paper style={{backgroundColor: '#41AF89'}}>
+        <SideBar elevation={7}>
           System
           <MenuList>
-            {MenuData.map((item)=>{
-
+            {menu.map((item)=>{
               let color = {color : 'white'}
               let bg = {backgroundColor : 'inherit', height: '50px'}
-              
               if (location.pathname === item.path) {
                 color = {color: '#41AF89'}
                 bg = {backgroundColor : '#fff', height: '50px'}
               }
-
-              return<Link style={{textDecoration: 'none',}} to={item.path}>
-              <MenuItem style={bg}>
-                <ListItemIcon style={color}>
-                  {item.icon}
-                </ListItemIcon>
-                <Text color={color.color}>
-                  {item.name}
-                </Text>
-              </MenuItem>
-            </Link>
+              return (
+                <Link style={{textDecoration: 'none'}} to={item.path} key={item.name}>
+                  <MenuItem style={bg}>
+                    <ListItemIcon style={color}>
+                      {item.icon}
+                    </ListItemIcon>
+                    <Text color={color.color}>
+                      {item.name}
+                    </Text>
+                  </MenuItem>
+                </Link>
+              ) 
             })}
           </MenuList>
-        </Paper>
+        </SideBar>
         <Content>
+          <Header elevation={7}>
+            Hello, {user.name}
+          </Header>
+          <ChildrenCont>
             {children}
+          </ChildrenCont>
         </Content>
     </Cont>
   )

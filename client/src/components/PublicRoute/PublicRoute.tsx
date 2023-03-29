@@ -5,11 +5,11 @@ type PublicRouteProps = {
     children: React.ReactNode
 }
 
-const PublicRoute = ({children}: PublicRouteProps): any => {
+const PublicRoute = ({children}: PublicRouteProps) => {
     if (localStorage.getItem('token')) {
         return <Navigate to='/' />
     } else {
-        return children
+        return <>{children}</>
     }
 }
 

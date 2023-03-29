@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../../redux/features/alertSlice";
-import { RootState } from "../../redux/features/store";
+import { RootState } from "../../redux/store";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -42,10 +42,6 @@ const Login = () => {
 
   return (
     <FormCont onSubmit={(event) => handleSubmit(event)}>
-      {loading ? (
-        "Loading..."
-      ) : (
-        <>
           <h1>Login</h1>
           <TextField
             variant="filled"
@@ -81,8 +77,6 @@ const Login = () => {
           <p>
             Don't have an account? Register <Link to="/register">here.</Link>
           </p>
-        </>
-      )}
     </FormCont>
   );
 };
