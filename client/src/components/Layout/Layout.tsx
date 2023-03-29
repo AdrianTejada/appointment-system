@@ -1,10 +1,13 @@
 import React from 'react'
 import { Cont, Content, Text, Header, ChildrenCont, SideBar } from './styles';
 import { MenuList, MenuItem, ListItemIcon } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { userMenu, AdminMenu } from './../../data/data';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/features/userSlice';
 
 type LayoutProps = {
     children: React.ReactNode
@@ -14,8 +17,20 @@ type LayoutProps = {
 const Layout = ({children}: LayoutProps) => {
   const location = useLocation()
   const {user} = useSelector((state: RootState)=> state.user)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const menu = user.isAdmin ? AdminMenu : userMenu
+
+  const handleClick = (path: string) => {
+    if (path === '/logout') {
+      localStorage.removeItem('token')
+      dispatch(setUser({name: '', isAdmin: false, isDoctor: false}))
+      navigate('/login')
+    } else {
+      navigate(path)
+    }
+  }
 
   return (
     <Cont>
@@ -30,8 +45,7 @@ const Layout = ({children}: LayoutProps) => {
                 bg = {backgroundColor : '#fff', height: '50px'}
               }
               return (
-                <Link style={{textDecoration: 'none'}} to={item.path} key={item.name}>
-                  <MenuItem style={bg}>
+                  <MenuItem style={bg} onClick={()=>handleClick(item.path)}>
                     <ListItemIcon style={color}>
                       {item.icon}
                     </ListItemIcon>
@@ -39,7 +53,6 @@ const Layout = ({children}: LayoutProps) => {
                       {item.name}
                     </Text>
                   </MenuItem>
-                </Link>
               ) 
             })}
           </MenuList>
