@@ -7,12 +7,6 @@ export const Cont = styled.div`
     flex-direction: row;
 `
 
-export const SideBar = styled.div`
-    min-width: 200px;
-    height: 100vh;
-    background-color: maroon;
-`
-
 export const Content = styled.div`
     width: 100%;
     height: 100vh;
@@ -20,3 +14,9 @@ export const Content = styled.div`
     align-items: center;
     justify-content: center;
 `
+
+export const Text = styled.div`
+    color: ${props=>props.color};
+    font-weight: 500;
+    letter-spacing: 1px;
+`;

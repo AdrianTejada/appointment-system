@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Navigate } from 'react-router-dom'
 
 type ProtectedRouteProps = {
@@ -6,10 +6,8 @@ type ProtectedRouteProps = {
 }
 
 
-
 const ProtectedRoute = ({children}: ProtectedRouteProps): any => {
     const token = localStorage.getItem('token')
-
     if (typeof token === 'string') {
         return children
     } else {

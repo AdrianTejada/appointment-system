@@ -6,29 +6,30 @@ type MenuDateObject = {
 
 type MenuDataType = MenuDateObject[];
 
-import {BsFillHouseFill} from 'react-icons/bs'
+import {BsFillHouseFill, BsListUl, BsFillHospitalFill, BsFillPersonFill} from 'react-icons/bs'
 
 
+const size = 21
 
 export const MenuData = [
     {
         name: 'Home',
         path: '/',
-        icon: BsFillHouseFill
+        icon: <BsFillHouseFill  size={size}/>
     },
     {
         name: 'Appointments',
         path: '/appointments',
-        icon: BsFillHouseFill
+        icon: <BsListUl  size={size}/>
     },
     {
         name: 'Apply Doctor',
         path: '/apply-doctor',
-        icon: BsFillHouseFill
+        icon: <BsFillHospitalFill  size={size}/>
     },
     {
         name: 'Profile',
         path: '/profile',
-        icon: BsFillHouseFill
+        icon: <BsFillPersonFill size={size}/>
     }
 ]
