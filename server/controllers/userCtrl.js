@@ -18,7 +18,7 @@ const loginController = async (req, res) => {
         res.status(200).send({message: 'Login Success', success:true, token});
     } catch (error) {
         console.log(error);
-        res.status(500).send({succeess: false, message: `Login Controller ${error.message}`})
+        res.status(500).send({success: false, message: `Login Controller ${error.message}`})
     }
 };
 
@@ -38,7 +38,7 @@ const registerController = async (req, res) => {
         res.status(201).send({message: 'Registered Successfully', success: true})
     } catch (error) {
         console.log(error)
-        res.status(500).send({succeess: false, message: `Register Controller ${error.message}`})
+        res.status(500).send({success: false, message: `Register Controller ${error.message}`})
     }
 };
 
@@ -49,11 +49,11 @@ const authController = async (req, res) => {
         if (!user) {
             res.status(200).send({success: false, message: 'user not found'})
         } else {
-            res.status(200).send({succeess: true, email: user.email, name : user.name})
+            res.status(200).send({success: true, email: user.email, name : user.name})
         }
     } catch (error) {
         console.log(error)
-        res.status(500).send({succeess: false, message: error.message})
+        res.status(500).send({success: false, message: error.message})
     }
 }
 

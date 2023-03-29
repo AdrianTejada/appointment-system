@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../../redux/features/alertSlice";
-import { RootState } from "../../redux/features/store";
+import { RootState } from "../../redux/store";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
