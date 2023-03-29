@@ -49,7 +49,7 @@ const authController = async (req, res) => {
         if (!user) {
             res.status(200).send({success: false, message: 'user not found'})
         } else {
-            res.status(200).send({success: true, email: user.email, name : user.name})
+            res.status(200).send({success: true, user})
         }
     } catch (error) {
         console.log(error)

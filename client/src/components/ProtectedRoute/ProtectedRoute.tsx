@@ -27,18 +27,17 @@ const ProtectedRoute = ({children}: ProtectedRouteProps) => {
                 }
             })
             if (res.data.success) {
-                const data = {
-                    name: res.data.name,
-                    email: res.data.email
-                }
-                dispatch(setUser(data))
+                dispatch(setUser(res.data.user))
             } else {
-                console.log(res.data)
+                <Navigate to="/login"/>
+                localStorage.clear()
             }
         } catch (error) {
             console.log(error)
+            localStorage.clear()
         }
         dispatch(hideLoading())
+        // localStorage.clear()
     }
 
     useEffect(()=>{

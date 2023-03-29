@@ -12,7 +12,23 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'password is required']
-    }
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isDoctor: {
+        type: Boolean,
+        default: false
+    },
+    notifications: {
+        type: Array,
+        default: []
+    },
+    seen_notifications: {
+        type: Array,
+        default: []
+    },
 })
 
 const userModel = mongoose.model('users', userSchema)
