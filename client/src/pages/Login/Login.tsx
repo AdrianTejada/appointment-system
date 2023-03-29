@@ -42,10 +42,6 @@ const Login = () => {
 
   return (
     <FormCont onSubmit={(event) => handleSubmit(event)}>
-      {loading ? (
-        "Loading..."
-      ) : (
-        <>
           <h1>Login</h1>
           <TextField
             variant="filled"
@@ -81,8 +77,6 @@ const Login = () => {
           <p>
             Don't have an account? Register <Link to="/register">here.</Link>
           </p>
-        </>
-      )}
     </FormCont>
   );
 };

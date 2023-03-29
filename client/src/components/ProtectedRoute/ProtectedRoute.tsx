@@ -4,6 +4,8 @@ import { useDispatch} from 'react-redux'
 import axios from 'axios'
 import { setUser } from '../../redux/features/userSlice'
 import { showLoading, hideLoading } from '../../redux/features/alertSlice'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store'
 
 type ProtectedRouteProps = {
     children: React.ReactNode
@@ -14,6 +16,7 @@ type ProtectedRouteProps = {
 const ProtectedRoute = ({children}: ProtectedRouteProps) => {
     const dispatch = useDispatch()
     const token = localStorage.getItem('token')
+    const {user} = useSelector((state: RootState) => state.user)
 
     const getUser = async() => {
         dispatch(showLoading())
@@ -25,22 +28,23 @@ const ProtectedRoute = ({children}: ProtectedRouteProps) => {
             })
             if (res.data.success) {
                 const data = {
-                    name: res.data.email,
+                    name: res.data.name,
                     email: res.data.email
                 }
                 dispatch(setUser(data))
             } else {
                 console.log(res.data)
             }
-            dispatch(hideLoading())
         } catch (error) {
             console.log(error)
-            dispatch(hideLoading())
         }
+        dispatch(hideLoading())
     }
 
     useEffect(()=>{
-        getUser()
+        if (user.name.length === 0) {
+            getUser()
+        }
     })
 
 
