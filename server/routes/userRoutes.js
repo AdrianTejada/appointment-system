@@ -18,6 +18,6 @@ router.post('/register', registerController);
 // AUTH || POST
 router.post('/getUserData', auth, authController);
 
-router.post('/applyDoctor', applyDoctorController, authController)
+router.post('/applyDoctor', auth, applyDoctorController)
 
 module.exports = router;
