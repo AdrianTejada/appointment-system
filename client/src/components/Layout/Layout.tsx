@@ -1,6 +1,6 @@
 import React from 'react'
 import { Cont, Content, Text, Header, ChildrenCont, SideBar } from './styles';
-import { MenuList, MenuItem, ListItemIcon } from '@mui/material';
+import { MenuList, MenuItem, ListItemIcon, Badge } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
@@ -8,6 +8,8 @@ import { userMenu, AdminMenu } from './../../data/data';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/features/userSlice';
+import { BsFillBellFill } from "react-icons/bs";
+
 
 type LayoutProps = {
     children: React.ReactNode
@@ -59,7 +61,10 @@ const Layout = ({children}: LayoutProps) => {
         </SideBar>
         <Content>
           <Header elevation={7}>
-            Hello, {user.name}
+            Hello, {user.name} 
+            <Badge badgeContent={user.notifications.length} color='primary'>
+              <BsFillBellFill size={30} onClick={()=>console.log(user)}/>
+            </Badge>
           </Header>
           <ChildrenCont>
             {children}
