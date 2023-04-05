@@ -4,7 +4,11 @@ import { Button, TextField } from '@mui/material'
 
 import styled from '@emotion/styled';
 import { TimePicker } from 'antd';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { showLoading, hideLoading } from '../../redux/features/alertSlice';
+import { RootState } from '../../redux/store';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const FormCont = styled.form`
     display: flex;
@@ -40,6 +44,9 @@ type infoTypes = {
 
 
 const ApplyDoctor = () => {
+    const {user} = useSelector((state: RootState) => state.user)
+    const navigate = useNavigate();
+
     const [info, setInfo] = useState({
         firstName: '',
         lastName: '',
@@ -55,7 +62,28 @@ const ApplyDoctor = () => {
 
     const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        console.log(info)
+        try {
+            const res = await axios.post(
+                'http://localhost:8080/api/v1/user/applyDoctor',
+                {
+                    ...info,
+                    userId: user._id
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')?.replace(/['"]+/g, "")}`
+                    }
+                }
+            )
+            if (res.data.success) {
+                navigate('/')
+            }
+            else {
+                console.log(res.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     

@@ -5,10 +5,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        user: {name: '', isAdmin: false, isDoctor: false}
+        user: {name: '', isAdmin: false, isDoctor: false, _id: ''}
     },
     reducers: {
-        setUser: (state, action) => {
+        setUser: (state: any, action) => {
             state.user = action.payload
         }
     }
