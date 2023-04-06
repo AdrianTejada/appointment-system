@@ -6,6 +6,8 @@ const {
 } = require('../controllers/adminCtrl');
 
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/getAllUsers', auth, getAllUsersController)
+router.get('/getAllUsers', auth, getAllUsersController);
+
+module.exports = router;
