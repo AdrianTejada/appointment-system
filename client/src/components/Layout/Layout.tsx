@@ -62,8 +62,8 @@ const Layout = ({children}: LayoutProps) => {
         <Content>
           <Header elevation={7}>
             Hello, {user.name} 
-            <Badge badgeContent={user.notifications.length} color='primary'>
-              <BsFillBellFill size={30} onClick={()=>console.log(user)}/>
+            <Badge badgeContent={user.notifications.length} color='primary' onClick={()=>navigate('/notifications')}>
+              <BsFillBellFill size={30}/>
             </Badge>
           </Header>
           <ChildrenCont>
