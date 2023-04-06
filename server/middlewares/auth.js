@@ -10,6 +10,7 @@ module.exports = async = (req, res, next) => {
                     success: false
                 })
             } else {
+                // be careful with this lmao
                 req.body.userId = decode.id;
                 next();
             }

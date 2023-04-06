@@ -25,6 +25,7 @@ type DoctorData = {
     lastName: string,
     phone: string,
     status: string,
+    userId: string
 }
 
 const Doctors = () => {
@@ -51,6 +52,32 @@ const Doctors = () => {
             console.log(error)
         }
     }
+
+    const handleApprove = async (doctorId: string, status: string) => {
+        try {
+            const res = await axios.post(
+                'http://localhost:8080/api/v1/admin/changeAccountStatus',
+                {
+                    doctorId,
+                    status
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')?.replace(/['"]+/g, "")}`
+                    }
+                }
+            )
+            if (res.data.status) {
+                console.log(res.data)
+            }
+            else {
+                console.log(res.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        getUsers();
+    };
 
     useEffect(()=>{
         if (doctors.length === 0) {
@@ -82,7 +109,7 @@ const Doctors = () => {
                             </TableRow>
                         </TableHead>
                         {doctors.map((doctor)=>(
-                            <TableRow>
+                            <TableRow key={doctor.userId}>
                                 <TableCell>
                                     {doctor.firstName} {doctor.lastName}
                                 </TableCell>
@@ -93,9 +120,22 @@ const Doctors = () => {
                                     {doctor.phone}
                                 </TableCell>
                                 <TableCell align='right'>
-                                    <Button sx={{margin: 0, padding: 0}}>
-                                        {doctor.status === 'pending' ? 'Approve' : 'Block'}
-                                    </Button>
+                                    {doctor.status === 'pending' ?
+                                        <Button
+                                            sx={{margin: 0, padding: 0}} 
+                                            onClick={()=>{
+                                                // console.log(doctor.userId)
+                                                handleApprove(doctor.userId, 'approved')
+                                            }}
+                                            // onClick={()=>console.log(doctor.userId)}
+                                        >
+                                            Approve
+                                        </Button>
+                                    : 
+                                        <Button sx={{margin: 0, padding: 0}} onClick={()=>handleApprove(doctor.userId, 'reject')}>
+                                            Reject
+                                        </Button>
+                                    }
                                 </TableCell>
                             </TableRow>
                         ))}
