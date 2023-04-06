@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux'
 import { RootState } from './redux/store'
 import ApplyDoctor from './pages/ApplyDoctor/ApplyDoctor';
 import Notifications from './pages/Notifications/Notifications'
+import Doctors from './pages/Admin/Doctors'
+import Users from './pages/Admin/Users'
 
 function App() {
   const {loading} = useSelector((state: RootState) => state.alerts)
@@ -51,6 +53,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <Notifications/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/admin/doctors'
+            element={
+              <ProtectedRoute>
+                <Doctors/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/admin/users'
+            element={
+              <ProtectedRoute>
+                <Users/>
               </ProtectedRoute>
             }
           />

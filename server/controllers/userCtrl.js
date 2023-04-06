@@ -96,6 +96,7 @@ const getAllNotificationsController = async (req, res) => {
         user.notifications = [];
         user.seen_notifications = seen_notifications;
         const updatedUser = await user.save();
+        updatedUser.password = undefined;
         res.status(201).send({
             success: true, 
             message: 'Notifications marked as read', 
@@ -108,10 +109,29 @@ const getAllNotificationsController = async (req, res) => {
     }
 };
 
+const deleteNotifications = async (req, res) => {
+    try {
+        const user = await userModel.findOne({_id: req.body.userId})
+        user.notifications = [];
+        user.seen_notifications =  [];
+        const updatedUser = await user.save();
+        updatedUser.password = undefined;
+        res.status(201).send({
+            success: true,
+            message: 'Notifications successfully deleted',
+            data: updatedUser
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({success: false, message: error})
+    }
+}
+
 module.exports = { 
     loginController, 
     registerController, 
     authController, 
     applyDoctorController,
-    getAllNotificationsController
+    getAllNotificationsController,
+    deleteNotifications,
 };

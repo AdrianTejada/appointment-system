@@ -50,12 +50,12 @@ export const AdminMenu = [
     },
     {
         name: 'Doctors',
-        path: '/doctors',
+        path: '/admin/doctors',
         icon: <IoMedical  size={size}/>
     },
     {
         name: 'Users',
-        path: '/profile-doctor',
+        path: '/admin/users',
         icon: <BsFillPeopleFill  size={size}/>
     },
     {

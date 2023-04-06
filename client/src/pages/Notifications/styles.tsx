@@ -38,7 +38,7 @@ export function TabPanel(props: TabPanelProps) {
     );
 }
 
-
+// ADD ONCLICK ROUTE HERE AS WELL
 
 export const NotificatonList = <Item extends NotificationType>({data}: NotificationProps<Item>) => {
   return (<>
