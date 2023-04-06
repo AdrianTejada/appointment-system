@@ -96,6 +96,7 @@ const getAllNotificationsController = async (req, res) => {
         user.notifications = [];
         user.seen_notifications = seen_notifications;
         const updatedUser = await user.save();
+        updatedUser.password = undefined;
         res.status(201).send({
             success: true, 
             message: 'Notifications marked as read', 
@@ -114,6 +115,7 @@ const deleteNotifications = async (req, res) => {
         user.notifications = [];
         user.seen_notifications =  [];
         const updatedUser = await user.save();
+        updatedUser.password = undefined;
         res.status(201).send({
             success: true,
             message: 'Notifications successfully deleted',
