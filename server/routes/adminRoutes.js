@@ -10,4 +10,6 @@ const router = express.Router();
 
 router.get('/getAllUsers', auth, getAllUsersController);
 
+router.get('/getAllDoctors', auth, getAllDoctorsController)
+
 module.exports = router;

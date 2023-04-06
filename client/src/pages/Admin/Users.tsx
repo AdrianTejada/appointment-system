@@ -19,6 +19,7 @@ import {
 type UserData = {
     name: string,
     email: string,
+    isDoctor: boolean
 }
 
 const Cont = styled.div`
@@ -74,7 +75,7 @@ const Users = () => {
                                     Email
                                 </TableCell>
                                 <TableCell>
-                                    Created at
+                                    Doctor?
                                 </TableCell>
                                 <TableCell align='right'>
                                     Actions
@@ -90,9 +91,10 @@ const Users = () => {
                                     {user.email}
                                 </TableCell>
                                 <TableCell>
+                                    {user.isDoctor ? 'Yes' : 'No'}
                                 </TableCell>
                                 <TableCell align='right'>
-                                    <Button>
+                                    <Button sx={{margin: 0, padding: 0}}>
                                         Block
                                     </Button>
                                 </TableCell>
