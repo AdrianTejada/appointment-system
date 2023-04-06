@@ -4,13 +4,34 @@ import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { showLoading, hideLoading } from '../../redux/features/alertSlice'
 // import { RootState } from '../../redux/store'
+import styled from '@emotion/styled'
+
+import { 
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    Paper,
+    Button
+ } from '@mui/material'
+
+type UserData = {
+    name: string,
+    email: string,
+}
+
+const Cont = styled.div`
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+`
 
 const Users = () => {
-    const [users , setUsers] = useState([])
+    const [users , setUsers] = useState<UserData[] | []>([])
     const dispatch = useDispatch()
 
     const getUsers = async () => {
-        // dispatch(showLoading())
         try {
             const res = await axios.get(
                 'http://localhost:8080/api/v1/admin/getAllUsers',
@@ -26,24 +47,60 @@ const Users = () => {
             else {
                 console.log(res.data)
             }
-            // dispatch(hideLoading())
         } catch (error) {
             console.log(error)
-            // dispatch(hideLoading())
         }
     }
 
     useEffect(()=>{
-        if (users.length=== 0) {
+        if (users.length === 0) {
+            dispatch(showLoading());
             getUsers();
+            dispatch(hideLoading());
         }
-    })
+    },[])
 
     return (
         <Layout>
-            <div  onClick={()=>console.log(users)}>
-                Users
-            </div>
+            <Cont>
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    Name
+                                </TableCell>
+                                <TableCell>
+                                    Email
+                                </TableCell>
+                                <TableCell>
+                                    Created at
+                                </TableCell>
+                                <TableCell align='right'>
+                                    Actions
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        {users.map((user)=>(
+                            <TableRow>
+                                <TableCell>
+                                    {user.name}
+                                </TableCell>
+                                <TableCell>
+                                    {user.email}
+                                </TableCell>
+                                <TableCell>
+                                </TableCell>
+                                <TableCell align='right'>
+                                    <Button>
+                                        Block
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </Table>
+                </TableContainer>
+            </Cont>
         </Layout>
     )
 }
