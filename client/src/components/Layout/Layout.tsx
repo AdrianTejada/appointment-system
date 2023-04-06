@@ -9,11 +9,16 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/features/userSlice';
 import { BsFillBellFill } from "react-icons/bs";
-
+import {BsFillHouseFill, BsListUl, BsFillHospitalFill, BsFillPersonFill, BsFillPeopleFill} from 'react-icons/bs'
+import { FiLogOut } from "react-icons/fi";
+import { IoMedical } from "react-icons/io5";
 
 type LayoutProps = {
     children: React.ReactNode
 }
+
+const size = 21
+
 
 
 const Layout = ({children}: LayoutProps) => {
@@ -22,7 +27,34 @@ const Layout = ({children}: LayoutProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const menu = user.isAdmin ? AdminMenu : userMenu
+  const doctorMenu = [
+    {
+      name: 'Home',
+      path: '/',
+      icon: <BsFillHouseFill  size={size}/>
+    },
+    {
+      name: 'Appointments',
+      path: '/appointments',
+      icon: <BsListUl  size={size}/>
+    },
+    {
+      name: 'Profile',
+      path: `/doctor/profile/${user._id}`,
+      icon: <BsFillPersonFill size={size}/>
+    },
+    {
+      name: 'Logout',
+      path: '/logout',
+      icon: <FiLogOut size={size}/>
+    }
+  ]
+
+  const menu = user.isAdmin
+  ? AdminMenu
+  : user.isDoctor
+  ? doctorMenu
+  : userMenu
 
   const handleClick = (path: string) => {
     if (path === '/logout') {

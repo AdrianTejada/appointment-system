@@ -37,7 +37,6 @@ const ProtectedRoute = ({children}: ProtectedRouteProps) => {
             localStorage.clear()
         }
         dispatch(hideLoading())
-        // localStorage.clear()
     }
 
     useEffect(()=>{
