@@ -43,7 +43,28 @@ const Notifications = () => {
     };
 
     const handleDeleteRead = async () => {
-
+        dispatch(showLoading())
+        try {
+            const res = await axios.post(
+                'http://localhost:8080/api/v1/user/DeleteNotifications',
+                {userId: user._id},
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')?.replace(/['"]+/g, "")}`
+                    }
+                }
+            );
+            dispatch(hideLoading())
+            if (res.data.message) {
+                console.log(res.data)
+                dispatch(setUser(res.data.data))
+            } else {
+                console.log (res.data)
+            }
+        } catch (error) {
+            console.log(error)
+            dispatch(hideLoading())
+        }
     };
 
     return (
@@ -63,12 +84,11 @@ const Notifications = () => {
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <ButtonCont>
-                        <Button>
+                        <Button onClick={handleDeleteRead}>
                             Delete Notifications
                         </Button>
                     </ButtonCont>
                     <NotificatonList data={user.seen_notifications}/>
-
                 </TabPanel>
             </Cont>
         </Layout>
