@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import Layout from '../../components/Layout/Layout';
 import { Tabs, Tab, Button} from '@mui/material';
-import { Cont, TabPanel, ButtonCont } from './styles';
+import { Cont, TabPanel, ButtonCont, NotificatonList } from './styles';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const Notifications = () => {
     const [value, setValue] = useState(0);
+    const {user} = useSelector((state: RootState) => state.user)
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -19,11 +22,11 @@ const Notifications = () => {
                 </Tabs>
                 <TabPanel value={value} index={0}>
                     <ButtonCont>
-                        <Button>
+                        <Button onClick={()=>console.log(user)}>
                             Mark as Read
                         </Button>
                     </ButtonCont>
-                    Notifications
+                    <NotificatonList data={user.notifications}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <ButtonCont>
@@ -31,7 +34,8 @@ const Notifications = () => {
                             Delete Notifications
                         </Button>
                     </ButtonCont>
-                    Notifications
+                    <NotificatonList data={user.seen_notifications}/>
+
                 </TabPanel>
             </Cont>
         </Layout>

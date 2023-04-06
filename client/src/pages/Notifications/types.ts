@@ -3,3 +3,13 @@ export type TabPanelProps = {
     index: number;
     value: number;
 }
+
+export type NotificationType = {
+    data: {}
+    message: string
+    type: string
+}
+
+export type NotificationProps<Item> = {
+    data: Item[]
+}

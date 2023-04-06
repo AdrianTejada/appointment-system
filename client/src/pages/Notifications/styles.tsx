@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { TabPanelProps } from './types';
-
+import { TabPanelProps, NotificationProps, NotificationType } from './types';
+import { Card } from '@mui/material';
 
 export const Cont = styled.div`
     width: 100%;
@@ -36,4 +36,14 @@ export function TabPanel(props: TabPanelProps) {
         )}
       </div>
     );
+}
+
+
+
+export const NotificatonList = <Item extends NotificationType>({data}: NotificationProps<Item>) => {
+  return (<>
+    {data.map((item) => <Card key={item.message} raised={false}>
+        {item.message}
+    </Card>)}
+  </>)
 }
