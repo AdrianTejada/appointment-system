@@ -94,9 +94,8 @@ const getAllNotificationsController = async (req, res) => {
         const notifications = user.notifications
         seen_notifications.push(...notifications)
         user.notifications = [];
-        user.seen_notifications = notifications;
+        user.seen_notifications = seen_notifications;
         const updatedUser = await user.save();
-
         res.status(201).send({
             success: true, 
             message: 'Notifications marked as read', 

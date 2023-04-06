@@ -22,6 +22,6 @@ router.post('/getUserData', auth, authController);
 // apply doctor || POST
 router.post('/applyDoctor', auth, applyDoctorController);
 
-router.post('/getAllNotifications', auth, getAllNotificationsController);
+router.post('/ReadNotifications', auth, getAllNotificationsController);
 
 module.exports = router;
