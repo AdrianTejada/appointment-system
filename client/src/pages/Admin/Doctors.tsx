@@ -123,16 +123,15 @@ const Doctors = () => {
                                     {doctor.status === 'pending' ?
                                         <Button
                                             sx={{margin: 0, padding: 0}} 
-                                            onClick={()=>{
-                                                // console.log(doctor.userId)
-                                                handleApprove(doctor.userId, 'approved')
-                                            }}
-                                            // onClick={()=>console.log(doctor.userId)}
+                                            onClick={()=>handleApprove(doctor.userId, 'approved')}
                                         >
                                             Approve
                                         </Button>
                                     : 
-                                        <Button sx={{margin: 0, padding: 0}} onClick={()=>handleApprove(doctor.userId, 'reject')}>
+                                        <Button 
+                                            sx={{margin: 0, padding: 0}} 
+                                            onClick={()=>handleApprove(doctor.userId, 'reject')}
+                                        >
                                             Reject
                                         </Button>
                                     }
