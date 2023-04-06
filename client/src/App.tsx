@@ -8,6 +8,7 @@ import PublicRoute from './components/PublicRoute';
 import { useSelector } from 'react-redux'
 import { RootState } from './redux/store'
 import ApplyDoctor from './pages/ApplyDoctor/ApplyDoctor';
+import Notifications from './pages/Notifications/Notifications'
 
 function App() {
   const {loading} = useSelector((state: RootState) => state.alerts)
@@ -43,7 +44,15 @@ function App() {
               <ProtectedRoute>
                 <ApplyDoctor/>
               </ProtectedRoute>
-          }
+            }
+          />
+          <Route
+            path='/notifications'
+            element={
+              <ProtectedRoute>
+                <Notifications/>
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </BrowserRouter>    

@@ -54,7 +54,7 @@ const authController = async (req, res) => {
         }
     } catch (error) {
         console.log(error)
-        res.status(500).send({success: false, message: error.message})
+        res.status(500).send({success: false, message: error})
     }
 }
 
@@ -83,8 +83,36 @@ const applyDoctorController = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        res.status(500).send({success: false, message: error.message})
+        res.status(500).send({success: false, message: error})
     }
-}
+};
 
-module.exports = {loginController, registerController, authController, applyDoctorController};
+const getAllNotificationsController = async (req, res) => {
+    try {
+        const user = await userModel.findOne({_id: req.body.userId})
+        const seen_notifications = user.seen_notifications
+        const notifications = user.notifications
+        seen_notifications.push(...notifications)
+        user.notifications = [];
+        user.seen_notifications = notifications;
+        const updatedUser = await user.save();
+
+        res.status(201).send({
+            success: true, 
+            message: 'Notifications marked as read', 
+            data: updatedUser
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({success: false, message: error})
+    }
+};
+
+module.exports = { 
+    loginController, 
+    registerController, 
+    authController, 
+    applyDoctorController,
+    getAllNotificationsController
+};
