@@ -21,6 +21,24 @@ const getDoctorInfoController = async (req,res) => {
     }
 }
 
+const updateProfileController = async (req, res) =>{
+    try {
+        const doctor = await doctorModel.findOneAndUpdate(
+            {userId: req.body.userId}, 
+            req.body
+        )
+        res.status(201).send({
+            success: true,
+            message: 'doctor profile updated',
+            data: doctor
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({success: false, message: error});
+    }
+}
+
 module.exports = {
-    getDoctorInfoController
+    getDoctorInfoController,
+    updateProfileController
 }
