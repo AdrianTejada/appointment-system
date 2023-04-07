@@ -3,6 +3,7 @@ import axios from 'axios';
 import Layout from '../../components/Layout';
 import styled from '@emotion/styled';
 import { Card } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Cont = styled.div`
     width:100%;
@@ -10,11 +11,9 @@ const Cont = styled.div`
     padding: 20px;
 `
 
-
-
-
 const Home = () => {
     const [doctors, setDoctors] = useState([] as any [])
+    const navigate = useNavigate()
 
     const getAllDoctors = async () => {
         try {
@@ -47,12 +46,16 @@ const Home = () => {
     return (
         <Layout>
             <Cont onClick={()=>console.log(doctors)}>
-                {doctors && doctors.map((doctor)=><Card key={doctor._id} sx={{maxWidth: '300px', padding: '20px'}}>
-                    <h4>Dr. {doctor.firstName} {doctor.lastName}</h4>
-                    <p>Specialization: {doctor.specialization}</p>
-                    <p>Experience {doctor.experience}</p>
-                    <p>FPC {doctor.feesPerConsultation}</p>
-                    <p>{doctor.timings[0]} - {doctor.timings[1]}</p>
+                {doctors && doctors.map((doctor)=><Card 
+                        key={doctor._id}
+                        sx={{maxWidth: '300px', padding: '20px'}}
+                        onClick={()=>navigate(`/doctor/book-appointment/${doctor._id}`)}
+                    >
+                        <h4>Dr. {doctor.firstName} {doctor.lastName}</h4>
+                        <p>Specialization: {doctor.specialization}</p>
+                        <p>Experience {doctor.experience}</p>
+                        <p>FPC {doctor.feesPerConsultation}</p>
+                        <p>{doctor.timings[0]} - {doctor.timings[1]}</p>
                 </Card>)}
             </Cont>
         </Layout>
