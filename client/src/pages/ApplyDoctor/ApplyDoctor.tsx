@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import Layout from '../../components/Layout'
 import { Button, TextField } from '@mui/material'
 
-import styled from '@emotion/styled';
 import { TimePicker } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { showLoading, hideLoading } from '../../redux/features/alertSlice';
@@ -10,38 +9,8 @@ import { RootState } from '../../redux/store';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const FormCont = styled.form`
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    height: 100%;
-    padding: 20px;
-`
-
-const Row = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-`
-
-const Section = styled.div`
-    margin-bottom: 50px;
-`
-
-type infoTypes = {
-    firstName: string
-    lastName: string
-    phone: string
-    email: string
-    website: string
-    address: string
-    specialization: string
-    experience: string
-    feesPerConsultation: string
-    timings: any
-}
-
+import { infoTypes } from './types';
+import { FormCont, Row, Section } from './styles';
 
 const ApplyDoctor = () => {
     const {user} = useSelector((state: RootState) => state.user)
