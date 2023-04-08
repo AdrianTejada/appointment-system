@@ -14,6 +14,7 @@ const Cont = styled.div`
 const Home = () => {
     const [doctors, setDoctors] = useState([] as any [])
     const navigate = useNavigate()
+    
 
     const getAllDoctors = async () => {
         try {
