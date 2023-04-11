@@ -5,10 +5,9 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Button, Card } from '@mui/material'
 import { DatePicker, TimePicker } from 'antd'
-import moment from 'moment'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-
+import dayjs from 'dayjs'
 
 const Cont = styled.div`
     width:100%;
@@ -36,7 +35,7 @@ const BookingPage = () => {
                 }   
             )
             if (res.data.success) {
-                console.log(res.data)
+                // console.log(res.data)
                 setDoctor(res.data.data)
             } else {
                 console.log(res.data)
@@ -53,12 +52,11 @@ const BookingPage = () => {
     })
 
     const handleDateChange = (value: any) => {
-        setDate(moment(value).format("DD-MM-YY"))
+        setDate(dayjs(value).format("DD-MM-YY"))
     }
 
     const handleTimingsChange = (value: any) => {
-        console.log(moment(value).format('h:mm'))
-        setTime(moment(value).format('h:mm'));
+        setTime(dayjs(value).format('HH:mm'));
     }
 
     const handleBooking = async () => {
@@ -96,10 +94,10 @@ const BookingPage = () => {
                     <Card sx={{padding: '20px', maxWidth: '400px'}}>
                         <h4>Dr. {doctor.firstName} {doctor.lastName}</h4>
                         <p>Fee: {doctor.feesPerConsultation}</p>
-                        {/* <p>{doctor.timings[0]} - {doctor.timings[1]}</p> */}
+                        <p>{doctor.timings[0]} - {doctor.timings[1]}</p>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                             <DatePicker format="DD-MM-YY" onChange={(value)=>handleDateChange(value)}/>
-                            <TimePicker format='h:mm' onChange={(value)=>handleTimingsChange(value)}/>
+                            <TimePicker format='HH:mm' onChange={(value)=>handleTimingsChange(value)}/>
                             <Button onClick={()=>console.log(date)}>
                                 Check Availability
                             </Button>
