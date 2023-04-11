@@ -147,7 +147,7 @@ const bookAppointmentController = async (req, res) => {
         const newAppointment = new appointmentModel(req.body)
         await newAppointment.save()
 
-        const user = await userModel.findOne({_id: req.body.userId})
+        const user = await userModel.findOne({_id: req.body.doctorInfo.userId})
 
         user.notifications.push({
             type: 'New-appointment-request',

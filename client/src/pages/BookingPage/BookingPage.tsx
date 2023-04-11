@@ -6,6 +6,8 @@ import axios from 'axios'
 import { Button, Card } from '@mui/material'
 import { DatePicker, TimePicker } from 'antd'
 import moment from 'moment'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 
 const Cont = styled.div`
@@ -18,9 +20,10 @@ const BookingPage = () => {
     const params = useParams()
     const [doctor, setDoctor] = useState({}as any)
     const [date, setDate] = useState<any>();
-    const [timings, setTimings] =  useState<any>();
+    const [time, setTime] =  useState<any>();
     const [isAvailable, setisAvailable] = useState();
-    
+    const {user} = useSelector((state: RootState)=> state.user)
+
     const getDoctorInfo = async () => {
         try {
             const res = await axios.post(
@@ -54,13 +57,35 @@ const BookingPage = () => {
     }
 
     const handleTimingsChange = (value: any) => {
-        const time_one = value[0];
-        const time_two = value[1];
+        console.log(moment(value).format('h:mm'))
+        setTime(moment(value).format('h:mm'));
+    }
 
-        console.log(time_one, time_two)
-
-        setTimings([moment(time_one).format('h:mm'), moment(time_two).format('h:mm')])
-        // setTimings(value)
+    const handleBooking = async () => {
+        try {
+               const res = await axios.post('http://localhost:8080/api/v1/user/bookAppointment',
+                    {
+                        doctorId : params.doctorId,
+                        userId: user._id,
+                        doctorInfo: doctor,
+                        date,
+                        time,
+                        userInfo: user
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')?.replace(/['"]+/g, "")}`
+                        }
+                    }
+               )
+               if (res.data.success) {
+                console.log(res.data)
+               } else {
+                console.log(res.data)
+               }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -74,9 +99,12 @@ const BookingPage = () => {
                         {/* <p>{doctor.timings[0]} - {doctor.timings[1]}</p> */}
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                             <DatePicker format="DD-MM-YY" onChange={(value)=>handleDateChange(value)}/>
-                            <TimePicker.RangePicker format='h:mm' onChange={(value)=>handleTimingsChange(value)}/>
-                            <Button onClick={()=>console.log(timings)}>
+                            <TimePicker format='h:mm' onChange={(value)=>handleTimingsChange(value)}/>
+                            <Button onClick={()=>console.log(date)}>
                                 Check Availability
+                            </Button>
+                            <Button onClick={()=>handleBooking()}>
+                                Book
                             </Button>
                         </div>
                     </Card>

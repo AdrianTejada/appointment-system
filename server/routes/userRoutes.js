@@ -36,6 +36,6 @@ router.post('/DeleteNotifications', auth, deleteNotifications)
 router.get('/getAllDoctors', auth, getAllDoctorsController)
 
 // book appointmetn || post
-router.get('/bookAppointment', auth, bookAppointmentController);
+router.post('/bookAppointment', auth, bookAppointmentController);
 
 module.exports = router;
