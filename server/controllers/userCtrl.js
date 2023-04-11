@@ -2,6 +2,7 @@ const userModel = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const doctorModel = require('../models/doctorModel');
+const appointmentModel = require('../models/appointmentModel');
 
 // login controller
 const loginController = async (req, res) => {
@@ -140,6 +141,32 @@ const getAllDoctorsController = async (req, res) => {
     }
 };
 
+const bookAppointmentController = async (req, res) => {
+    try {
+        req.body.status = "pending"
+        const newAppointment = new appointmentModel(req.body)
+        await newAppointment.save()
+
+        const user = await userModel.findOne({_id: req.body.doctorInfo.userId})
+
+        user.notifications.push({
+            type: 'New-appointment-request',
+            message: `A new appointment request from ${req.body.userInfo.name}`,
+            onClickPath: '/user/appointments'
+        });
+
+        await user.save();
+        res.status(200).send({
+            success: true,
+            message: 'appointmetn booked'
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({success: false, message: error});
+    }
+}
+
 module.exports = { 
     loginController, 
     registerController, 
@@ -147,5 +174,6 @@ module.exports = {
     applyDoctorController,
     getAllNotificationsController,
     deleteNotifications,
-    getAllDoctorsController
+    getAllDoctorsController,
+    bookAppointmentController
 };
