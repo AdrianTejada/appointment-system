@@ -20,7 +20,7 @@ const BookingPage = () => {
     const [doctor, setDoctor] = useState({}as any)
     const [date, setDate] = useState<any>();
     const [time, setTime] =  useState<any>();
-    const [isAvailable, setisAvailable] = useState();
+    const [isAvailable, setisAvailable] = useState(false);
     const {user} = useSelector((state: RootState)=> state.user)
 
     const getDoctorInfo = async () => {
@@ -84,8 +84,35 @@ const BookingPage = () => {
         } catch (error) {
             console.log(error)
         }
+        setisAvailable(false)
     }
 
+    const handleAvailability = async () => {
+        try {
+            const res = await axios.post(
+                'http://localhost:8080/api/v1/user/bookingAvailability',
+                {
+                    doctorId : params.doctorId,
+                    date,
+                    time,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')?.replace(/['"]+/g, "")}`
+                    }
+                }
+            )
+            if (res.data.availability) {
+                setisAvailable(true)
+            }
+            else {
+                setisAvailable(false)
+                console.log(res.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <Layout>
@@ -94,14 +121,14 @@ const BookingPage = () => {
                     <Card sx={{padding: '20px', maxWidth: '400px'}}>
                         <h4>Dr. {doctor.firstName} {doctor.lastName}</h4>
                         <p>Fee: {doctor.feesPerConsultation}</p>
-                        <p>{doctor.timings[0]} - {doctor.timings[1]}</p>
+                        {/* <p>{doctor.timings[0]} - {doctor.timings[1]}</p> */}
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                             <DatePicker format="DD-MM-YY" onChange={(value)=>handleDateChange(value)}/>
                             <TimePicker format='HH:mm' onChange={(value)=>handleTimingsChange(value)}/>
-                            <Button onClick={()=>console.log(date)}>
+                            <Button onClick={()=>handleAvailability()}>
                                 Check Availability
                             </Button>
-                            <Button onClick={()=>handleBooking()}>
+                            <Button onClick={()=>handleBooking()} disabled={!isAvailable}>
                                 Book
                             </Button>
                         </div>

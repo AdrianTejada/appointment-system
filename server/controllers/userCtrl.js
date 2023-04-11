@@ -183,11 +183,10 @@ const bookingAvailabilityController = async (req, res) => {
                 date,
                 time: {
                     // find out what this means
-                    $get: fromTime, $let: toTime
+                    $gte: fromTime, $lt: toTime
                 }
             }
         ) 
-
         if (appointments.length > 0) {
             return res.status(200).send({
                 message: 'appointment not available at this time',
