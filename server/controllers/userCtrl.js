@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const doctorModel = require('../models/doctorModel');
 const appointmentModel = require('../models/appointmentModel');
+const moment = require('moment');
 
 // login controller
 const loginController = async (req, res) => {
@@ -143,6 +144,8 @@ const getAllDoctorsController = async (req, res) => {
 
 const bookAppointmentController = async (req, res) => {
     try {
+        req.body.date = moment(req.body.date, 'DD-MM-YY').toISOString();
+        req.body.time = moment(req.body.time, 'HH:mm').toISOString();
         req.body.status = "pending"
         const newAppointment = new appointmentModel(req.body)
         await newAppointment.save()
@@ -167,6 +170,43 @@ const bookAppointmentController = async (req, res) => {
     }
 }
 
+const bookingAvailabilityController = async (req, res) => {
+    try {
+        const date = moment(req.body.date, 'DD-MM-YY').toISOString();
+        const fromTime = moment(req.body.time, 'HH:mm').subtract(1, 'hours').toISOString();
+        const toTime = moment(req.body.time, 'HH:mm').add(1, 'hours').toISOString();
+        const doctorId = req.body.doctorId;
+
+        const appointments = await appointmentModel.find(
+            {
+                doctorId, 
+                date,
+                time: {
+                    // find out what this means
+                    $get: fromTime, $let: toTime
+                }
+            }
+        ) 
+
+        if (appointments.length > 0) {
+            return res.status(200).send({
+                message: 'appointment not available at this time',
+                success: true,
+                availability: false
+            })
+        } else {
+            return res.status(200).send({
+                message: 'appointment slot available',
+                success: true,
+                availability: true
+            })
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({success: false, message: error});
+    }
+}
+
 module.exports = { 
     loginController, 
     registerController, 
@@ -175,5 +215,6 @@ module.exports = {
     getAllNotificationsController,
     deleteNotifications,
     getAllDoctorsController,
-    bookAppointmentController
+    bookAppointmentController,
+    bookingAvailabilityController
 };
