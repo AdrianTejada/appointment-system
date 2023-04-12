@@ -3,6 +3,16 @@ import Layout from '../../components/Layout'
 import axios from 'axios'
 import styled from '@emotion/styled'
 
+import { 
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    Paper,
+    Button
+ } from '@mui/material'
+
 const Cont = styled.div`
     width: 100%;
     height: 100%;
@@ -38,8 +48,54 @@ const DoctorAppointments = () => {
 
     return (
         <Layout>
-            <Cont onClick={()=>console.log(appointments)}>
-                doc
+            <Cont>
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    Name
+                                </TableCell>
+                                <TableCell>
+                                    Date
+                                </TableCell>
+                                <TableCell>
+                                    Time
+                                </TableCell>
+                                <TableCell>
+                                    Status
+                                </TableCell>
+                                <TableCell>
+                                    Actions
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        {appointments.map((appointment)=>(
+                            <TableRow>
+                                <TableCell>
+                                    {appointment.userInfo.name}
+                                </TableCell>
+                                <TableCell>
+                                    {appointment.date}
+                                </TableCell>
+                                <TableCell>
+                                    {appointment.time}
+                                </TableCell>
+                                <TableCell>
+                                    {appointment.status}
+                                </TableCell>
+                                <TableCell>
+                                    <Button>
+                                        Approve
+                                    </Button>
+                                    <Button>
+                                        Decline
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </Table>
+                </TableContainer>
             </Cont>
         </Layout>
     )

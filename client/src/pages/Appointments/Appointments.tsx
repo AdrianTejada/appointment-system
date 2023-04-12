@@ -4,6 +4,11 @@ import axios from 'axios'
 import styled from '@emotion/styled'
 import moment from 'moment'
 
+const Cont = styled.div`
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+`
 import { 
     TableContainer,
     Table,
@@ -11,14 +16,7 @@ import {
     TableRow,
     TableCell,
     Paper,
-    Button
  } from '@mui/material'
-
-const Cont = styled.div`
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-`
 
 const Appointments = () => {
 
