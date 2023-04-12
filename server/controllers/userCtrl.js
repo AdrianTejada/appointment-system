@@ -206,6 +206,20 @@ const bookingAvailabilityController = async (req, res) => {
     }
 }
 
+const userAppointmentsController = async (req, res) => {
+    try {
+        const appointments = await appointmentModel.find({userId: req.body.userId})
+        res.status(200).send({
+            success: true,
+            message: 'appointments fetched successfully',
+            data: appointments
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({success: false, message: error});
+    }
+}
+
 module.exports = { 
     loginController, 
     registerController, 
@@ -215,5 +229,6 @@ module.exports = {
     deleteNotifications,
     getAllDoctorsController,
     bookAppointmentController,
-    bookingAvailabilityController
+    bookingAvailabilityController,
+    userAppointmentsController
 };
