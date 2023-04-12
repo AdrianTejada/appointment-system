@@ -116,7 +116,7 @@ const BookingPage = () => {
 
     return (
         <Layout>
-            <Cont>
+            <Cont onClick={()=>console.log(user)}>
                 {doctor && (
                     <Card sx={{padding: '20px', maxWidth: '400px'}}>
                         <h4>Dr. {doctor.firstName} {doctor.lastName}</h4>
