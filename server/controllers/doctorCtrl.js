@@ -1,5 +1,6 @@
 const doctorModel = require('../models/doctorModel');
 const appointmentModel = require('../models/appointmentModel');
+const userModel = require('../models/userModel');
 
 const getDoctorInfoController = async (req,res) => {
     try {
@@ -75,9 +76,40 @@ const doctorAppointmentsController = async (req, res) => {
     }
 }
 
+const updateAppointmentController = async (req, res) => {
+    try {
+        const {_id, status, patientId} = req.body
+        const appointment = await appointmentModel.findOneAndUpdate({_id}, {status})
+
+        // await appointment.save()
+
+        const user = await userModel.findOne({_id: patientId})
+        
+        console.log(user)
+
+        user.notifications.push({
+            type: 'appointment-',
+            message: `Your appointment with has been ${status}`,
+            onClickPath: '/appointments'
+        })
+
+        await user.save()
+
+        res.status(201).send({
+            success: true,
+            message: 'Appointment Updated'
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({success: false, message: error});
+    }
+}
+
 module.exports = {
     getDoctorInfoController,
     updateProfileController,
     getDoctorByIdController,
-    doctorAppointmentsController
+    doctorAppointmentsController,
+    updateAppointmentController
 }

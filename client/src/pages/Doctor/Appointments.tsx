@@ -46,6 +46,31 @@ const DoctorAppointments = () => {
         handleGetAppointments();
     },[])
 
+    const handleAppointmentUpdate = async (appointmentId: string, status: string, patientId: string) => {
+        try {
+            const res = await axios.post(
+                'http://localhost:8080/api/v1/doctor/updateAppointment',
+                {
+                    _id: appointmentId,
+                    status,
+                    patientId
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')?.replace(/['"]+/g, "")}`
+                    }
+                }
+            )
+            if (res.data.success) {
+                location.reload()
+            } else {
+                console.log(res.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <Layout>
             <Cont>
@@ -85,10 +110,10 @@ const DoctorAppointments = () => {
                                     {appointment.status}
                                 </TableCell>
                                 <TableCell>
-                                    <Button>
+                                    <Button onClick={()=>handleAppointmentUpdate(appointment._id, 'approved', appointment.userId)}>
                                         Approve
                                     </Button>
-                                    <Button>
+                                    <Button onClick={()=>handleAppointmentUpdate(appointment._id, 'declined', appointment.userId)}>
                                         Decline
                                     </Button>
                                 </TableCell>
