@@ -3,7 +3,8 @@ const auth = require('../middlewares/auth');
 const { 
     getDoctorInfoController, 
     updateProfileController,
-    getDoctorByIdController
+    getDoctorByIdController,
+    doctorAppointmentsController
 } = require('../controllers/doctorCtrl'); 
 
 const router = express.Router();
@@ -16,5 +17,7 @@ router.post('/updateDoctorInfo', auth, updateProfileController)
 
 // get doctor by id || post
 router.post('/getDoctorById', auth, getDoctorByIdController)
+
+router.get('/doctorAppointments', auth, doctorAppointmentsController)
 
 module.exports = router

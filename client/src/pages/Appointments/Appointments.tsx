@@ -1,8 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import Layout from '../../components/Layout'
 import axios from 'axios'
-
 import styled from '@emotion/styled'
+import moment from 'moment'
+
+import { 
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    Paper,
+    Button
+ } from '@mui/material'
 
 const Cont = styled.div`
     width: 100%;
@@ -12,7 +22,7 @@ const Cont = styled.div`
 
 const Appointments = () => {
 
-    const [appointments, setAppointments] = useState([])
+    const [appointments, setAppointments] = useState([] as any[])
 
     const getAppointments = async () => {
         try {
@@ -35,15 +45,48 @@ const Appointments = () => {
     };
 
     useEffect(()=>{
-        if (appointments.length === 0) {
-            getAppointments();
-        }
-    })
+        getAppointments();
+    }, [])
 
     return (
         <Layout>
             <Cont onClick={()=>console.log(appointments)}>
-                Appointments
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    Doctor
+                                </TableCell>
+                                <TableCell>
+                                    Date
+                                </TableCell>
+                                <TableCell>
+                                    Time
+                                </TableCell>
+                                <TableCell>
+                                    Status
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        {appointments.map((appointment)=>(
+                            <TableRow>
+                                <TableCell>
+                                    {appointment.doctorInfo.firstName} {appointment.doctorInfo.lastName}
+                                </TableCell>
+                                <TableCell>
+                                    {moment(appointment.date).format('MMM DD YYYY')}
+                                </TableCell>
+                                <TableCell>
+                                    {moment(appointment.time).format('HH:mm')}
+                                </TableCell>
+                                <TableCell>
+                                    {appointment.status}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </Table>
+                </TableContainer>
             </Cont>
         </Layout>
     )
