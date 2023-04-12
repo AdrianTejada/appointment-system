@@ -35,7 +35,7 @@ const Layout = ({children}: LayoutProps) => {
     },
     {
       name: 'Appointments',
-      path: '/appointments',
+      path: '/doctor/appointments',
       icon: <BsListUl  size={size}/>
     },
     {
